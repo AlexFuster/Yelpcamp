@@ -1,0 +1,24 @@
+{
+  "name": "yelpcamp",
+  "version": "1.0.0",
+  "description": "An implementation of the final project of The Web Developer Bootcamp by Colt Steele.   WIP...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexFuster/Yelpcamp.git"
+  },
+  "author": "Alex Fuster",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexFuster/Yelpcamp/issues"
+  },
+  "homepage": "https://github.com/AlexFuster/Yelpcamp#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.7.2",
+    "express": "^4.17.1"
+  }
+}
