@@ -1,16 +1,11 @@
 var app=require('express')();
+const mongoose = require('mongoose');
 app.use(require('body-parser').urlencoded({extended:true}));
-var campgrounds=[
-    {name:'AAA',image:'https://via.placeholder.com/150/A00'},
-    {name:'BBB',image:'https://via.placeholder.com/150/00A'},
-    {name:'CCC',image:'https://via.placeholder.com/150/0A0'},
-    {name:'DDD',image:'https://via.placeholder.com/150/AA0'},
-    {name:'AAA',image:'https://via.placeholder.com/150/A00'},
-    {name:'BBB',image:'https://via.placeholder.com/150/00A'},
-    {name:'CCC',image:'https://via.placeholder.com/150/0A0'},
-    {name:'DDD',image:'https://via.placeholder.com/150/AA0'},
-    {name:'AAA',image:'https://via.placeholder.com/150/A00'}
-];
+mongoose.connect('mongodb://localhost/yelp_camp', {useUnifiedTopology: true,useNewUrlParser: true});
+
+const Campground = mongoose.model('campground', { name: String, image: String, description: String});
+
+
 
 app.set('view engine','ejs')
 app.get('/',(req,res)=>{
@@ -18,19 +13,28 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/campgrounds',(req,res)=>{
-    res.render('campgrounds',{campgrounds:campgrounds});
+    Campground.find({})
+        .then((campgrounds)=>{res.render('campgrounds',{campgrounds:campgrounds})})
+        .catch(()=>{console.log('could not retrieve campgrounds from database')});
 });
 
+
+
 app.post('/campgrounds',(req,res)=>{
-    campgrounds.push({
-        name:req.body.name,
-        image:req.body.img
-    });
+    Campground.create({name:req.body.name,image:req.body.img,description:req.body.description})
+        .then(()=>{console.log('Campground created')})
+        .catch(()=>{console.log('Error at Campground creation')});
     res.redirect('/campgrounds');
 });
 
 app.get('/campgrounds/new',(req,res)=>{
     res.render('new');
+});
+
+app.get('/campgrounds/:id',(req,res)=>{
+    Campground.findById(req.params.id)
+        .then((campground)=>{res.render('show',{campground:campground})})
+        .catch(()=>{console.log('could not retrieve campgrounds from database')});
 });
 
 app.listen(3000,'localhost',()=>{
