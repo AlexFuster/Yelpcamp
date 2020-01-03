@@ -40,6 +40,7 @@
                         } else {
                             console.log("added a campground");
                             //create a comment
+                            /*
                             Comment.create(
                                 {
                                     text: "This place is great, but I wish there was internet",
@@ -53,6 +54,7 @@
                                         console.log("Created new comment");
                                     }
                                 });
+                            */
                         }
                     });
                 });
